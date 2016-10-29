@@ -19,18 +19,26 @@ export const setup = options => {
 }
 
 const _wrap = (WrappedComponent, styles) => {
-  const hits = parser.cache.stats.hits
-  const parsedStyles = parser.parse(styles)
-
-  if (parser.cache.stats.hits <= hits) {
-    insertCSS(parsedStyles.css)
-  }
-
   return class Suitup extends Component {
+    constructor (props) {
+      super(props)
+      this.hits = 0
+      this.parsedStyles = {}
+    }
+
     static displayName = `Suitup(${_getDisplayName(WrappedComponent)})`
 
+    componentWillMount = () => {
+      this.hits = parser.cache.stats.hits
+      this.parsedStyles = parser.parse(styles)
+
+      if (parser.cache.stats.hits <= this.hits) {
+        insertCSS(this.parsedStyles.css)
+      }
+    }
+
     render () {
-      const {tokens} = parsedStyles
+      const {tokens} = this.parsedStyles
       return <WrappedComponent {...this.props} styles={tokens} />
     }
   }

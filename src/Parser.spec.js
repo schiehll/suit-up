@@ -5,7 +5,7 @@ test('should accept an options object and merge it with the default options', ()
   const fakePlugin = () => 'fake'
   const options = {
     plugins: [fakePlugin],
-    browsers: []
+    browsers: ['last 2 versions']
   }
 
   const parser = new Parser(options)

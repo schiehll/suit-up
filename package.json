@@ -17,6 +17,7 @@
   "scripts": {
     "test": "standard && jest",
     "test:watch": "jest --watch",
+    "test:cover": "jest --coverage",
     "precommit": "npm test",
     "commit": "git cz"
   },
