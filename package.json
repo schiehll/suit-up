@@ -1,7 +1,7 @@
 {
   "name": "suit-up",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/schiehll/suit-up.git"
@@ -19,7 +19,8 @@
     "test:watch": "jest --watch --coverage",
     "test:cover": "jest --coverage",
     "precommit": "npm test",
-    "commit": "git cz"
+    "commit": "git cz",
+    "build": "babel src --out-dir lib --ignore *.spec.js"
   },
   "dependencies": {
     "autoprefixer": "^6.5.1",
@@ -62,6 +63,7 @@
   "standard": {
     "parser": "babel-eslint",
     "ignore": [
+      "lib",
       "**/*/*.spec.js"
     ]
   },
