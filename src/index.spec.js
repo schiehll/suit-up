@@ -103,6 +103,5 @@ test('should not insert the same css in the style tag twice', () => {
 
   expect(parser.cache.stats.hits).toBe(1)
   expect(styleLength).toEqual(styleLength)
-
 })
 

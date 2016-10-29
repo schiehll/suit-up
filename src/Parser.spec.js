@@ -1,5 +1,6 @@
 import Parser from './Parser'
 
+
 test('should accept an options object and merge it with the default options', () => {
   const fakePlugin = () => 'fake'
   const options = {
@@ -56,4 +57,26 @@ test('should chache the styles', () => {
   }
 
   expect(parser.cache.stats).toEqual(expected)
+})
+
+test('should minify the css if production option is set to true', () => {
+  let parser = new Parser()
+  const css = `
+    .someClass {
+      color: black;
+    }
+
+    .someOtherClass {
+      color: white;
+    }
+  `
+
+  let styles = parser.parse(css)
+  const CSSLength = styles.css.length
+
+  parser = new Parser({production: true})
+  styles = parser.parse(css)
+  const minifiedCSSLength = styles.css.length
+
+  expect(CSSLength).toBeGreaterThan(minifiedCSSLength)
 })
