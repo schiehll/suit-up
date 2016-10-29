@@ -20,7 +20,7 @@ class Parser {
 
     defaultOptions.plugins.push(
       autoprefixer({
-        browsers: []
+        browsers: opts.browsers || defaultOptions.browsers
       })
     )
 

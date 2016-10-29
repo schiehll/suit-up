@@ -14,21 +14,23 @@ const suitup = (...args) => {
 
 export const setup = options => {
   parser = new Parser(options)
+
+  return parser
 }
 
 const _wrap = (WrappedComponent, styles) => {
   const hits = parser.cache.stats.hits
-  const _styles = parser.parse(styles)
+  const parsedStyles = parser.parse(styles)
 
   if (parser.cache.stats.hits <= hits) {
-    insertCSS(_styles.css)
+    insertCSS(parsedStyles.css)
   }
 
   return class Suitup extends Component {
     static displayName = `Suitup(${_getDisplayName(WrappedComponent)})`
 
     render () {
-      const {tokens} = _styles
+      const {tokens} = parsedStyles
       return <WrappedComponent {...this.props} styles={tokens} />
     }
   }

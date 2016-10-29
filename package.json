@@ -17,7 +17,8 @@
   "scripts": {
     "test": "standard && jest",
     "test:watch": "jest --watch",
-    "precommit": "npm test"
+    "precommit": "npm test",
+    "commit": "git cz"
   },
   "dependencies": {
     "autoprefixer": "^6.5.1",

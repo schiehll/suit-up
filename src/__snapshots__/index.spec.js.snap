@@ -1,6 +1,6 @@
 exports[`test should wrap a component and inject styles prop 1`] = `
 <div
-  className="blue_3cput_2">
+  className="blue_532ba_2">
   Blue Content
 </div>
 `;
