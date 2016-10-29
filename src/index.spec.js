@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
-import renderer from 'react-test-renderer'
+//import renderer from 'react-test-renderer'
+import {render} from 'enzyme'
+import {renderToJson} from 'enzyme-to-json'
 import suitup, {setup} from './index'
 
 let parser = null
@@ -32,11 +34,11 @@ test('should wrap a component and inject styles prop', () => {
     }
   }
 
-  const component = renderer.create(
+  const component = render(
     <BlueText>Blue Content</BlueText>
-  ).toJSON()
+  )
 
-  expect(component).toMatchSnapshot()
+  expect(renderToJson(component)).toMatchSnapshot()
 })
 
 test('should insert a style tag in the document head', () => {
@@ -52,9 +54,9 @@ test('should insert a style tag in the document head', () => {
     }
   }
 
-  const component = renderer.create(
+  const component = render(
     <BlueText>Blue Content</BlueText>
-  ).toJSON()
+  )
 
   const styleEl = document.querySelectorAll('style')
 
@@ -74,9 +76,9 @@ test('should not insert the same css in the style tag twice', () => {
     }
   }
 
-  let component = renderer.create(
+  let component = render(
     <BlueText>Blue Content</BlueText>
-  ).toJSON()
+  )
 
   const styleEl = document.querySelector('style')
   let styleLength = styleEl.textContent.length
@@ -88,20 +90,38 @@ test('should not insert the same css in the style tag twice', () => {
     render() {
       const {styles, children} = this.props
       return (
-        <div className={styles.blue}>
+        <div className={styles.red}>
           {children}
         </div>
       )
     }
   }
 
-  component = renderer.create(
+  component = render(
     <RedText>Red Content</RedText>
-  ).toJSON()
+  )
 
   styleLength = styleEl.textContent.length
 
   expect(parser.cache.stats.hits).toBe(1)
   expect(styleLength).toEqual(styleLength)
+})
+
+test('should work as a HOC', () => {
+  const BlueText = ({children, styles}) => {
+    return (
+      <div className={styles.blue}>
+        {children}
+      </div>
+    )
+  }
+
+  const StyledBluetxt = suitup(style)(BlueText)
+
+  const component = render(
+    <StyledBluetxt>Blue Content</StyledBluetxt>
+  )
+
+  expect(renderToJson(component)).toMatchSnapshot()
 })
 

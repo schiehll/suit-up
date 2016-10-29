@@ -3,13 +3,26 @@ import Parser from './Parser'
 
 test('should accept an options object and merge it with the default options', () => {
   const fakePlugin = () => 'fake'
-  const options = {
+  let options = {
     plugins: [fakePlugin],
     browsers: ['last 2 versions']
   }
 
-  const parser = new Parser(options)
-  const expected = {
+  let parser = new Parser(options)
+  let expected = {
+    ...parser.options,
+    ...options
+  }
+
+  expect(parser.options).toEqual(expected)
+
+  options = {
+    plugins: [],
+    browsers: ['last 2 versions']
+  }
+
+  parser = new Parser(options)
+  expected = {
     ...parser.options,
     ...options
   }

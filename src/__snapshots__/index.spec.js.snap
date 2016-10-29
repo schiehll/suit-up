@@ -1,6 +1,13 @@
+exports[`test should work as a HOC 1`] = `
+<div
+  class="blue_532ba_2">
+  Blue Content
+</div>
+`;
+
 exports[`test should wrap a component and inject styles prop 1`] = `
 <div
-  className="blue_532ba_2">
+  class="blue_532ba_2">
   Blue Content
 </div>
 `;

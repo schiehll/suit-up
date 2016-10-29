@@ -5,10 +5,6 @@ import insertCSS from 'insert-css'
 let parser = {}
 
 const suitup = (...args) => {
-  if (typeof args[0] === 'function') {
-    return _HOC(...args)
-  }
-
   return _decorator(...args)
 }
 
@@ -54,10 +50,6 @@ const _decorator = styles => {
   return WrappedComponent => {
     return _wrap(WrappedComponent, styles)
   }
-}
-
-const _HOC = (WrappedComponent, styles) => {
-  return _wrap(WrappedComponent, styles)
 }
 
 export default suitup
