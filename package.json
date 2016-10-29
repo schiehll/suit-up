@@ -1,0 +1,69 @@
+{
+  "name": "suit-up",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/schiehll/suit-up.git"
+  },
+  "keywords": [
+    "react",
+    "css-in-js",
+    "CSS Modules",
+    "postcss"
+  ],
+  "author": "schiehll <rn.schiehll@gmail.com> (http://github.com/schiehll)",
+  "license": "MIT",
+  "scripts": {
+    "test": "standard && jest",
+    "test:watch": "jest --watch",
+    "precommit": "npm test"
+  },
+  "dependencies": {
+    "autoprefixer": "^6.5.1",
+    "insert-css": "^1.0.0",
+    "mem": "^1.1.0",
+    "postcss": "^5.2.5",
+    "postcss-modules-sync": "^0.1.0",
+    "react": "^15.3.2",
+    "stats-map": "^1.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-eslint": "^7.1.0",
+    "babel-jest": "^16.0.0",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-2": "^6.18.0",
+    "commitizen": "^2.8.6",
+    "cz-conventional-changelog": "^1.2.0",
+    "husky": "^0.11.9",
+    "jest-cli": "^16.0.2",
+    "react-addons-test-utils": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-test-renderer": "^15.3.2",
+    "standard": "^8.5.0"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-2",
+      "react"
+    ],
+    "plugins": [
+      "transform-decorators-legacy"
+    ]
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "ignore": [
+      "**/*/*.spec.js"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
+  }
+}
