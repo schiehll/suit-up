@@ -1,6 +1,5 @@
 import postcss from 'postcss'
 import CSSModulesSync from 'postcss-modules-sync'
-import cssnano from 'cssnano/dist/lib/core'
 import autoprefixer from 'autoprefixer'
 import StatsMap from 'stats-map'
 import mem from 'mem'
@@ -34,7 +33,11 @@ class Parser {
       ? opts.production
       : this.options.production
 
-    if (production) this.options.plugins.push(cssnano())
+    if (production) {
+      this.options.plugins.push(
+        require('cssnano/dist/lib/core')()
+      )
+    }
 
     this.options.plugins = opts.hasOwnProperty('plugins')
       ? this.options.plugins.concat(opts.plugins)
