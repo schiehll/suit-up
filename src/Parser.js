@@ -8,7 +8,7 @@ import mem from 'mem'
 class Parser {
   constructor (opts = {}) {
     this.tokens = {}
-    const defaultOptions = {
+    this.options = {
       production: false,
       browsers: [],
       plugins: [
@@ -20,22 +20,25 @@ class Parser {
       ]
     }
 
-    defaultOptions.plugins.push(
+    this.options.browsers = opts.hasOwnProperty('browsers')
+      ? opts.browsers
+      : this.options.browsers
+
+    this.options.plugins.push(
       autoprefixer({
-        browsers: opts.browsers || defaultOptions.browsers
+        browsers: this.options.browsers
       })
     )
 
     const production = opts.hasOwnProperty('production')
       ? opts.production
-      : defaultOptions.production
+      : this.options.production
 
-    if (production) defaultOptions.plugins.push(cssnano())
+    if (production) this.options.plugins.push(cssnano())
 
-    this.options = {
-      ...defaultOptions,
-      ...opts
-    }
+    this.options.plugins = opts.hasOwnProperty('plugins')
+      ? this.options.plugins.concat(opts.plugins)
+      : this.options.plugins
 
     this.cache = new StatsMap()
     this.parse = mem(this._parse, {cache: this.cache})
