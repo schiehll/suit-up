@@ -1,6 +1,6 @@
 import postcss from 'postcss'
 import CSSModulesSync from 'postcss-modules-sync'
-import autoprefixer from 'autoprefixer'
+import whitespace from 'postcss-whitespace'
 import StatsMap from 'stats-map'
 import mem from 'mem'
 
@@ -9,7 +9,6 @@ class Parser {
     this.tokens = {}
     this.options = {
       production: false,
-      browsers: [],
       plugins: [
         CSSModulesSync({
           getTokens: exportedTokens => {
@@ -19,23 +18,13 @@ class Parser {
       ]
     }
 
-    this.options.browsers = opts.hasOwnProperty('browsers')
-      ? opts.browsers
-      : this.options.browsers
-
-    this.options.plugins.push(
-      autoprefixer({
-        browsers: this.options.browsers
-      })
-    )
-
     const production = opts.hasOwnProperty('production')
       ? opts.production
       : this.options.production
 
     if (production) {
       this.options.plugins.push(
-        require('cssnano/dist/lib/core')()
+        whitespace()
       )
     }
 

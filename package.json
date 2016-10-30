@@ -23,12 +23,11 @@
     "build": "babel src --out-dir lib --ignore *.spec.js"
   },
   "dependencies": {
-    "autoprefixer": "^6.5.1",
-    "cssnano": "^3.8.0",
     "insert-css": "^1.0.0",
     "mem": "^1.1.0",
     "postcss": "^5.2.5",
     "postcss-modules-sync": "^0.1.0",
+    "postcss-whitespace": "^1.0.0",
     "react": "^15.3.2",
     "stats-map": "^1.0.0"
   },
