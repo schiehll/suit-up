@@ -18,11 +18,11 @@ class Parser {
       ]
     }
 
-    const production = opts.hasOwnProperty('production')
+    this.options.production = opts.hasOwnProperty('production')
       ? opts.production
       : this.options.production
 
-    if (production) {
+    if (this.options.production) {
       this.options.plugins.push(
         whitespace()
       )

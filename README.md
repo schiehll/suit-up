@@ -57,7 +57,7 @@ class App extends Component {
 
 render(<App />, document.getElementById('app'))
 
-/* it work as a HOC too
+/* it work as a wrapping function too
 const StyledApp = suitup(style)(App)
 render(<StyledApp />, document.getElementById('app'))
 */

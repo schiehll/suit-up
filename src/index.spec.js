@@ -106,7 +106,7 @@ test('should not insert the same css in the style tag twice', () => {
   expect(styleLength).toEqual(styleLength)
 })
 
-test('should work as a HOC', () => {
+test('should work as a wrapping function', () => {
   const BlueText = ({children, styles}) => {
     return (
       <div className={styles.blue}>

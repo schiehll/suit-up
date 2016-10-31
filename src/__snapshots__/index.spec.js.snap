@@ -1,4 +1,4 @@
-exports[`test should work as a HOC 1`] = `
+exports[`test should work as a wrapping function 1`] = `
 <div
   class="blue_532ba_2">
   Blue Content
