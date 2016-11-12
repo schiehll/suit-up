@@ -1,14 +1,12 @@
 import React, {Component} from 'react'
 import {render} from 'enzyme'
 import {renderToJson} from 'enzyme-to-json'
-import suitup, {setup} from './index'
+import suitup from './index'
+import parser from './parser'
 
-let parser = null
 let style = ''
 
 beforeEach(() => {
-  parser = setup()
-
   style = `
     .blue {
       color: blue;
@@ -23,7 +21,7 @@ beforeEach(() => {
 test('should wrap a component and inject styles prop', () => {
   @suitup(style)
   class BlueText extends Component {
-    render() {
+    render () {
       const {styles, children} = this.props
       return (
         <div className={styles.blue}>
@@ -43,7 +41,7 @@ test('should wrap a component and inject styles prop', () => {
 test('should insert a style tag in the document head', () => {
   @suitup(style)
   class BlueText extends Component {
-    render() {
+    render () {
       const {styles, children} = this.props
       return (
         <div className={styles.blue}>
@@ -53,7 +51,7 @@ test('should insert a style tag in the document head', () => {
     }
   }
 
-  const component = render(
+  render(
     <BlueText>Blue Content</BlueText>
   )
 
@@ -65,7 +63,7 @@ test('should insert a style tag in the document head', () => {
 test('should not insert the same css in the style tag twice', () => {
   @suitup(style)
   class BlueText extends Component {
-    render() {
+    render () {
       const {styles, children} = this.props
       return (
         <div className={styles.blue}>
@@ -75,18 +73,16 @@ test('should not insert the same css in the style tag twice', () => {
     }
   }
 
-  let component = render(
+  render(
     <BlueText>Blue Content</BlueText>
   )
 
   const styleEl = document.querySelector('style')
   let styleLength = styleEl.textContent.length
 
-  expect(parser.cache.stats.hits).toBe(0)
-
   @suitup(style)
   class RedText extends Component {
-    render() {
+    render () {
       const {styles, children} = this.props
       return (
         <div className={styles.red}>
@@ -96,13 +92,12 @@ test('should not insert the same css in the style tag twice', () => {
     }
   }
 
-  component = render(
+  render(
     <RedText>Red Content</RedText>
   )
 
   styleLength = styleEl.textContent.length
 
-  expect(parser.cache.stats.hits).toBe(1)
   expect(styleLength).toEqual(styleLength)
 })
 

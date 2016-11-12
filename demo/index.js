@@ -1,12 +1,6 @@
-# suit-up :necktie:
-
-> css-in-js with template strings. For React.
-
-## Example
-```js
 import React, {Component} from 'react'
 import {render} from 'react-dom'
-import suitup from 'suit-up'
+import suitup from '../lib/index'
 
 // it works with CSS Modules syntax for globals
 const style = `
@@ -72,5 +66,3 @@ class App extends Component {
 }
 
 render(<App />, document.getElementById('app'))
-
-```

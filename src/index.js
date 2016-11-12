@@ -1,17 +1,9 @@
 import React, {Component} from 'react'
-import Parser from './Parser'
+import parser from './parser'
 import insertCSS from 'insert-css'
-
-let parser = {}
 
 const suitup = (...args) => {
   return _decorator(...args)
-}
-
-export const setup = options => {
-  parser = new Parser(options)
-
-  return parser
 }
 
 const _wrap = (WrappedComponent, styles) => {
@@ -25,10 +17,14 @@ const _wrap = (WrappedComponent, styles) => {
     static displayName = `Suitup(${_getDisplayName(WrappedComponent)})`
 
     componentWillMount = () => {
-      this.hits = parser.cache.stats.hits
+      this._injectSheet()
+    }
+
+    _injectSheet = () => {
+      this.hits = parser.cache.hits
       this.parsedStyles = parser.parse(styles)
 
-      if (parser.cache.stats.hits <= this.hits) {
+      if (parser.cache.hits <= this.hits) {
         insertCSS(this.parsedStyles.css)
       }
     }
