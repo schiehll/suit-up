@@ -85,7 +85,7 @@ render(<App />, document.getElementById('app'))
 ```
 
 # Acknowledgements
-This is HIGLY inspired by some amazing work:
+This is HIGHLY inspired by some amazing work:
 
 - [CSS Modules](https://github.com/css-modules/css-modules)
 - [styled-components](https://github.com/styled-components/styled-components)
