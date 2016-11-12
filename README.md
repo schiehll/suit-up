@@ -1,6 +1,15 @@
-# suit-up :necktie:
+# :necktie: suit-up
 
 > css-in-js with template strings. For React.
+
+## Features
+ - No build step
+ - Scoped selectors
+ - Automatic vendor prefixing
+ - Support global CSS
+ - All CSS features included
+ - Easy to override
+ - Share code between JS and CSS
 
 ## Example
 ```js
@@ -24,7 +33,7 @@ const style = `
 `
 
 // local composes works too!
-const buttonStyles = `
+const buttonStyle = `
   .base {
     border: none;
     border-radius: 4px;
@@ -56,7 +65,7 @@ let Button = ({children, styles, primary, ...rest}) => {
   )
 }
 
-Button = suitup(buttonStyles)(Button)
+Button = suitup(buttonStyle)(Button)
 
 @suitup(style)
 class App extends Component {
@@ -74,3 +83,11 @@ class App extends Component {
 render(<App />, document.getElementById('app'))
 
 ```
+
+# Acknowledgements
+This is HIGLY inspired by some amazing work:
+
+- [CSS Modules](https://github.com/css-modules/css-modules)
+- [styled-components](https://github.com/styled-components/styled-components)
+- [jss](https://github.com/cssinjs/jss)
+- [csjs](https://github.com/rtsao/csjs)

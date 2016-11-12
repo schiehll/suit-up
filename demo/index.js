@@ -18,7 +18,7 @@ const style = `
 `
 
 // local composes works too!
-const buttonStyles = `
+const buttonStyle = `
   .base {
     border: none;
     border-radius: 4px;
@@ -50,7 +50,7 @@ let Button = ({children, styles, primary, ...rest}) => {
   )
 }
 
-Button = suitup(buttonStyles)(Button)
+Button = suitup(buttonStyle)(Button)
 
 @suitup(style)
 class App extends Component {
