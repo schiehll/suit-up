@@ -2,6 +2,10 @@
 
 > css-in-js with template strings. For React.
 
+[![travis build](https://img.shields.io/travis/schiehll/suit-up.svg?style=flat-square)](https://travis-ci.org/schiehll/suit-up)
+[![version](https://img.shields.io/npm/v/suit-up.svg?style=flat-square)](http://npm.im/suit-up)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard)
+
 ## Features
  - No build step
  - Scoped selectors

@@ -1,0 +1,20 @@
+# Logs
+*.log
+npm-debug.log*
+
+# Yarn lock
+yarn.lock
+
+# Coverage directory used by tools like istanbul
+coverage
+
+# Dependency directories
+node_modules
+
+# Folders
+demo
+lib
+
+# Files
+.editorconfig
+.travis.yml
