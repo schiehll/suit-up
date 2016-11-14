@@ -6,7 +6,7 @@
 [![version](https://img.shields.io/npm/v/suit-up.svg?style=flat-square)](http://npm.im/suit-up)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard)
 
-## Features
+## Benefits
  - No build step
  - Scoped selectors
  - Automatic vendor prefixing
@@ -35,7 +35,7 @@ const style = `
 `
 
 // local composes works too!
-const buttonStyle = `
+const buttonStyle = props => `
   .base {
     border: none;
     border-radius: 4px;
@@ -45,21 +45,21 @@ const buttonStyle = `
 
   .default {
     composes: base;
-    color: black;
-    background-color: lightgray;
-  }
-
-  .primary {
-    composes: base;
-    color: white;
-    background-color: darkblue;
+    color: ${props.primary
+      ? 'white'
+      : 'black'
+    };
+    background-color: ${props.primary
+      ? 'darkblue'
+      : 'lightgray'
+    };
   }
 `
 
 let Button = ({children, styles, primary, ...rest}) => {
   return (
     <button
-      className={primary ? styles.primary : styles.default}
+      className={styles.default}
       {...rest}
     >
       {children}
@@ -90,7 +90,7 @@ import React, {Component} from 'react'
 import {render} from 'react-dom'
 import suitup, {ThemeProvider} from 'suit-up'
 
-const buttonStyle = theme => `
+const buttonStyle = (props, theme) => `
   .base {
     border: none;
     border-radius: ${theme.sizes.borderRadius}px;
@@ -100,20 +100,21 @@ const buttonStyle = theme => `
 
   .default {
     composes: base;
-    color: ${theme.colors.text};
-    background-color: ${theme.colors.default};
-  }
-
-  .primary {
-    composes: base;
-    color: ${theme.colors.invertedText};
-    background-color: ${theme.colors.primary};
+    color: ${props.primary
+      ? theme.colors.invertedText
+      : theme.colors.text
+    };
+    background-color: ${props.primary
+      ? theme.colors.primary
+      : theme.colors.default
+    };
   }
 `
+
 let Button = ({children, styles, primary, ...rest}) => {
   return (
     <button
-      className={primary ? styles.primary : styles.default}
+      className={styles.default}
       {...rest}
     >
       {children}
@@ -133,7 +134,7 @@ const someTheme = {
   sizes: {
     borderRadius: 4,
     verticalPadding: 10,
-    horizontalPadding: 10
+    horizontalPadding: 20
   }
 }
 

@@ -10,3 +10,6 @@ coverage
 
 # Dependency directories
 node_modules
+
+# Folders
+lib
