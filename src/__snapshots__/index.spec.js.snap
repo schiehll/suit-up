@@ -1,3 +1,10 @@
+exports[`test should call styles with theme context if it is a function 1`] = `
+<div
+  class="blue_532ba">
+  Blue Content
+</div>
+`;
+
 exports[`test should work as a wrapping function 1`] = `
 <div
   class="blue_532ba">

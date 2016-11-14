@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import parser from './parser'
+import ThemeProvider from './ThemeProvider'
 import insertCSS from 'insert-css'
 
 const suitup = (...args) => {
@@ -8,7 +9,7 @@ const suitup = (...args) => {
 
 const _wrap = (WrappedComponent, styles) => {
   return class Suitup extends Component {
-    constructor (props) {
+    constructor (props, context) {
       super(props)
       this.hits = 0
       this.parsedStyles = {}
@@ -16,13 +17,21 @@ const _wrap = (WrappedComponent, styles) => {
 
     static displayName = `Suitup(${_getDisplayName(WrappedComponent)})`
 
+    static contextTypes = {
+      theme: React.PropTypes.object
+    }
+
     componentWillMount = () => {
       this._injectSheet()
     }
 
     _injectSheet = () => {
+      const stylesToParse = typeof styles === 'function'
+        ? styles(this.context.theme)
+        : styles
+
       this.hits = parser.cache.hits
-      this.parsedStyles = parser.parse(styles)
+      this.parsedStyles = parser.parse(stylesToParse)
 
       if (parser.cache.hits <= this.hits) {
         insertCSS(this.parsedStyles.css)
@@ -48,4 +57,5 @@ const _decorator = styles => {
   }
 }
 
+export {ThemeProvider}
 export default suitup

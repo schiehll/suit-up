@@ -13,7 +13,9 @@
  - Support global CSS
  - All CSS features included
  - Easy to override
- - Share code between JS and CSS
+ - Share constants between js and styles
+ - Only load the styles that a component have used
+ - Easily themeable
 
 ## Example
 ```js
@@ -29,10 +31,6 @@ const style = `
     align-items: center;
     justify-content: center;
     height: 100vh;
-  }
-
-  :global .container > * {
-    margin: 0 10px;
   }
 `
 
@@ -85,7 +83,74 @@ class App extends Component {
 }
 
 render(<App />, document.getElementById('app'))
+```
+## Theme Example
+```js
+import React, {Component} from 'react'
+import {render} from 'react-dom'
+import suitup, {ThemeProvider} from 'suit-up'
 
+const buttonStyle = theme => `
+  .base {
+    border: none;
+    border-radius: ${theme.sizes.borderRadius}px;
+    cursor: pointer;
+    padding: ${theme.sizes.verticalPadding}px ${theme.sizes.horizontalPadding}px;
+  }
+
+  .default {
+    composes: base;
+    color: ${theme.colors.text};
+    background-color: ${theme.colors.default};
+  }
+
+  .primary {
+    composes: base;
+    color: ${theme.colors.invertedText};
+    background-color: ${theme.colors.primary};
+  }
+`
+let Button = ({children, styles, primary, ...rest}) => {
+  return (
+    <button
+      className={primary ? styles.primary : styles.default}
+      {...rest}
+    >
+      {children}
+    </button>
+  )
+}
+
+Button = suitup(buttonStyle)(Button)
+
+const someTheme = {
+  colors: {
+    default: 'lightgray',
+    primary: 'darkblue',
+    text: 'black',
+    invertedText: 'white',
+  },
+  sizes: {
+    borderRadius: 4,
+    verticalPadding: 10,
+    horizontalPadding: 10
+  }
+}
+
+class App extends Component {
+  render () {
+    return (
+      <ThemeProvider theme={someTheme}>
+        <div>
+          <Button>Default Button</Button>
+          <Button primary>Primary Button</Button>
+        </div>
+      </ThemeProvider>
+    )
+  }
+}
+
+render(<App />, document.getElementById('app'))
 ```
 
 # Acknowledgements
