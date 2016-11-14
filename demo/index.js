@@ -1,44 +1,27 @@
 import React, {Component} from 'react'
 import {render} from 'react-dom'
-import suitup from '../lib/index'
+import suitup, {ThemeProvider} from '../src/index'
 
-// it works with CSS Modules syntax for globals
-const style = `
-  :global .container {
-    color: red;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  }
-
-  :global .container > * {
-    margin: 0 10px;
-  }
-`
-
-// local composes works too!
-const buttonStyle = `
+const buttonStyle = theme => `
   .base {
     border: none;
-    border-radius: 4px;
+    border-radius: ${theme.sizes.borderRadius}px;
     cursor: pointer;
-    padding: 10px 20px;
+    padding: ${theme.sizes.verticalPadding}px ${theme.sizes.horizontalPadding}px;
   }
 
   .default {
     composes: base;
-    color: black;
-    background-color: lightgray;
+    color: ${theme.colors.text};
+    background-color: ${theme.colors.default};
   }
 
   .primary {
     composes: base;
-    color: white;
-    background-color: darkblue;
+    color: ${theme.colors.invertedText};
+    background-color: ${theme.colors.primary};
   }
 `
-
 let Button = ({children, styles, primary, ...rest}) => {
   return (
     <button
@@ -52,15 +35,29 @@ let Button = ({children, styles, primary, ...rest}) => {
 
 Button = suitup(buttonStyle)(Button)
 
-@suitup(style)
+const theme = {
+  colors: {
+    default: 'lightgray',
+    primary: 'darkblue',
+    text: 'black',
+    invertedText: 'white'
+  },
+  sizes: {
+    borderRadius: 4,
+    verticalPadding: 10,
+    horizontalPadding: 10
+  }
+}
+
 class App extends Component {
   render () {
     return (
-      <div className='container'>
-        <span>Red Text</span>
-        <Button>Default Button</Button>
-        <Button primary>Primary Button</Button>
-      </div>
+      <ThemeProvider theme={theme}>
+        <div>
+          <Button>Default Button</Button>
+          <Button primary>Primary Button</Button>
+        </div>
+      </ThemeProvider>
     )
   }
 }

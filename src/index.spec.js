@@ -3,6 +3,7 @@ import {render} from 'enzyme'
 import {renderToJson} from 'enzyme-to-json'
 import suitup from './index'
 import parser from './parser'
+import ThemeProvider from './ThemeProvider'
 
 let style = ''
 
@@ -114,6 +115,35 @@ test('should work as a wrapping function', () => {
 
   const component = render(
     <StyledBluetxt>Blue Content</StyledBluetxt>
+  )
+
+  expect(renderToJson(component)).toMatchSnapshot()
+})
+
+test('should call styles with theme context if it is a function', () => {
+  const btnStyle = theme => `
+    .someClass {
+      color: ${theme.color}
+    }
+  `
+
+  const BlueText = ({children, styles}) => {
+    return (
+      <div className={styles.blue}>
+        {children}
+      </div>
+    )
+  }
+
+  const StyledBluetxt = suitup(btnStyle)(BlueText)
+  const theme = {
+    color: 'blue'
+  }
+
+  const component = render(
+    <ThemeProvider theme={theme}>
+      <StyledBluetxt>Blue Content</StyledBluetxt>
+    </ThemeProvider>
   )
 
   expect(renderToJson(component)).toMatchSnapshot()
