@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {render} from 'react-dom'
 import suitup, {ThemeProvider} from '../src/index'
 
-const buttonStyle = theme => `
+const buttonStyle = (props, theme) => `
   .base {
     border: none;
     border-radius: ${theme.sizes.borderRadius}px;
@@ -12,20 +12,20 @@ const buttonStyle = theme => `
 
   .default {
     composes: base;
-    color: ${theme.colors.text};
-    background-color: ${theme.colors.default};
-  }
-
-  .primary {
-    composes: base;
-    color: ${theme.colors.invertedText};
-    background-color: ${theme.colors.primary};
+    color: ${props.primary
+      ? theme.colors.invertedText
+      : theme.colors.text
+    };
+    background-color: ${props.primary
+      ? theme.colors.primary
+      : theme.colors.default
+    };
   }
 `
 let Button = ({children, styles, primary, ...rest}) => {
   return (
     <button
-      className={primary ? styles.primary : styles.default}
+      className={styles.default}
       {...rest}
     >
       {children}
