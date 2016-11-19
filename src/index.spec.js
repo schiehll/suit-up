@@ -120,18 +120,11 @@ test('should work as a wrapping function', () => {
   expect(renderToJson(component)).toMatchSnapshot()
 })
 
-test('should call styles passing props and theme as args if it is a function', () => {
-  const btnStyle = (props, theme) => `
+test('should call styles passing the theme as arg if it is a function', () => {
+  const btnStyle = theme => `
     .someClass {
       color: ${theme.color};
-      background-color: ${props.primary ? 'darkgray' : 'gray'};
-    }
-  `
-
-  const btnStyleWithoutTheme = props => `
-    .someClass {
-      color: blue;
-      background-color: ${props.primary ? 'darkgray' : 'gray'};
+      background-color: ${theme.bg};
     }
   `
 
@@ -145,23 +138,16 @@ test('should call styles passing props and theme as args if it is a function', (
 
   const StyledBluetxt = suitup(btnStyle)(BlueText)
   const theme = {
-    color: 'blue'
+    color: 'blue',
+    bg: 'gray'
   }
 
   let component = render(
     <ThemeProvider theme={theme}>
-      <StyledBluetxt primary>Blue Content</StyledBluetxt>
+      <StyledBluetxt>Blue content with gray background</StyledBluetxt>
     </ThemeProvider>
   )
 
   expect(renderToJson(component)).toMatchSnapshot()
-
-  const StyledBluetxtWithoutTheme = suitup(btnStyleWithoutTheme)(BlueText)
-  component = render(
-     <StyledBluetxtWithoutTheme>Blue Content</StyledBluetxtWithoutTheme>
-  )
-
-  expect(renderToJson(component)).toMatchSnapshot()
-
 })
 

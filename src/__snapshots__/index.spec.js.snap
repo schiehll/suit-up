@@ -1,14 +1,7 @@
-exports[`test should call styles passing props and theme as args if it is a function 1`] = `
+exports[`test should call styles passing the theme as arg if it is a function 1`] = `
 <div
   class="blue_532ba">
-  Blue Content
-</div>
-`;
-
-exports[`test should call styles passing props and theme as args if it is a function 2`] = `
-<div
-  class="blue_532ba">
-  Blue Content
+  Blue content with gray background
 </div>
 `;
 
