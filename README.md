@@ -7,12 +7,10 @@
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard)
 
 ## Benefits
- - No build step
  - Scoped selectors
  - Automatic vendor prefixing
  - Support global CSS
  - All CSS features included
- - Easy to override
  - Share constants between js and styles
  - Only load the styles that a component have used
  - Easily themeable
@@ -35,7 +33,7 @@ const style = `
 `
 
 // local composes works too!
-const buttonStyle = props => `
+const buttonStyle = `
   .base {
     border: none;
     border-radius: 4px;
@@ -45,21 +43,21 @@ const buttonStyle = props => `
 
   .default {
     composes: base;
-    color: ${props.primary
-      ? 'white'
-      : 'black'
-    };
-    background-color: ${props.primary
-      ? 'darkblue'
-      : 'lightgray'
-    };
+    background-color: lightgray;
+    color: black;
+  }
+
+  .primary {
+    composes: base;
+    background-color: blue;
+    color: white;
   }
 `
 
 let Button = ({children, styles, primary, ...rest}) => {
   return (
     <button
-      className={styles.default}
+      className={primary ? styles.primary : styles.default}
       {...rest}
     >
       {children}
@@ -90,7 +88,7 @@ import React, {Component} from 'react'
 import {render} from 'react-dom'
 import suitup, {ThemeProvider} from 'suit-up'
 
-const buttonStyle = (props, theme) => `
+const buttonStyle = theme => `
   .base {
     border: none;
     border-radius: ${theme.sizes.borderRadius}px;
@@ -100,21 +98,21 @@ const buttonStyle = (props, theme) => `
 
   .default {
     composes: base;
-    color: ${props.primary
-      ? theme.colors.invertedText
-      : theme.colors.text
-    };
-    background-color: ${props.primary
-      ? theme.colors.primary
-      : theme.colors.default
-    };
+    background-color: ${theme.colors.default};
+    color: ${theme.colors.text};
+  }
+
+  .primary {
+    composes: base;
+    background-color: ${theme.colors.primary};
+    color: ${theme.colors.invertedText};
   }
 `
 
 let Button = ({children, styles, primary, ...rest}) => {
   return (
     <button
-      className={styles.default}
+      className={primary ? styles.primary : styles.default}
       {...rest}
     >
       {children}

@@ -27,7 +27,7 @@ const _wrap = (WrappedComponent, styles) => {
 
     _injectSheet = () => {
       const stylesToParse = typeof styles === 'function'
-        ? styles(this.props, this.context.theme)
+        ? styles(this.context.theme)
         : styles
 
       this.hits = parser.cache.hits

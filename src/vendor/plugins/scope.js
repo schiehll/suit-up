@@ -39,19 +39,17 @@ const stringHash = str => {
   return hash >>> 0
 }
 
-const scopeGenerator = (name, filename, css) => {
+const scopeGenerator = (name, css) => {
   const hash = stringHash(css).toString(36).substr(0, 5)
 
   return `${name}_${hash}`
 }
 
 const process = css => {
-  let generateScopedName = scopeGenerator
-
   let exports = {}
 
   function exportScopedName (name) {
-    let scopedName = generateScopedName(name, css.source.input.from, css.source.input.css)
+    let scopedName = scopeGenerator(name, css.source.input.css)
     exports[name] = exports[name] || []
     if (exports[name].indexOf(scopedName) < 0) {
       exports[name].push(scopedName)
