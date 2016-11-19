@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {render} from 'enzyme'
 import {renderToJson} from 'enzyme-to-json'
 import suitup from './index'
-import parser from './parser'
 import ThemeProvider from './ThemeProvider'
 
 let style = ''

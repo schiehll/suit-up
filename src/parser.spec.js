@@ -23,9 +23,9 @@ test('should chache the styles', () => {
     }
   `
 
-  let styles = parser.parse(css)
+  parser.parse(css)
   expect(parser.cache.hits).toEqual(0)
 
-  styles = parser.parse(css)
+  parser.parse(css)
   expect(parser.cache.hits).toEqual(1)
 })

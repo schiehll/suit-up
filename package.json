@@ -15,10 +15,9 @@
   "author": "schiehll <rn.schiehll@gmail.com> (http://github.com/schiehll)",
   "license": "MIT",
   "scripts": {
-    "test": "standard && jest",
+    "test": "standard && jest --coverage",
     "lint": "standard --fix",
     "test:watch": "jest --watch --coverage",
-    "test:cover": "jest --coverage",
     "precommit": "npm test",
     "commit": "git cz",
     "build": "babel src --out-dir lib --ignore *.spec.js",
@@ -72,7 +71,6 @@
     ],
     "ignore": [
       "lib",
-      "**/*/*.spec.js",
       "demo/js"
     ]
   },
