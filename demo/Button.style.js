@@ -1,21 +1,15 @@
-const style = ({sizes, colors}) => `
+const style = theme => `
   .base {
     border: none;
-    border-radius: ${sizes.borderRadius}px;
+    border-radius: ${theme.sizes.borderRadius};
     cursor: pointer;
-    padding: ${sizes.verticalPadding}px ${sizes.horizontalPadding}px;
+    padding: 10px 20px;
   }
 
   .default {
     composes: base;
-    background-color: ${colors.default};
-    color: ${colors.text};
-  }
-
-  .primary {
-    composes: base;
-    background-color: ${colors.primary};
-    color: ${colors.invertedText};
+    background-color: gray;
+    color: black;
   }
 `
 

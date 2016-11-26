@@ -121,7 +121,7 @@ test('should work as a wrapping function', () => {
 
 test('should call styles passing the theme as arg if it is a function', () => {
   const btnStyle = theme => `
-    .someClass {
+    .blue {
       color: ${theme.color};
       background-color: ${theme.bg};
     }

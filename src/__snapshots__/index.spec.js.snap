@@ -1,6 +1,6 @@
 exports[`test should call styles passing the theme as arg if it is a function 1`] = `
 <div
-  class="blue_532ba">
+  class="blue_1dgt6">
   Blue content with gray background
 </div>
 `;

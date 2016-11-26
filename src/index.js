@@ -3,44 +3,34 @@ import parser from './parser'
 import ThemeProvider from './ThemeProvider'
 import insertCSS from 'insert-css'
 
-const suitup = (...args) => {
-  return _decorator(...args)
-}
+const suitup = styles => {
+  return WrappedComponent => {
+    return class extends Component {
+      static displayName = `Suitup(${_getDisplayName(WrappedComponent)})`
 
-const _wrap = (WrappedComponent, styles) => {
-  return class Suitup extends Component {
-    constructor (props, context) {
-      super(props)
-      this.hits = 0
-      this.parsedStyles = {}
-    }
-
-    static displayName = `Suitup(${_getDisplayName(WrappedComponent)})`
-
-    static contextTypes = {
-      theme: React.PropTypes.object
-    }
-
-    componentWillMount = () => {
-      this._injectSheet()
-    }
-
-    _injectSheet = () => {
-      const stylesToParse = typeof styles === 'function'
-        ? styles(this.context.theme)
-        : styles
-
-      this.hits = parser.cache.hits
-      this.parsedStyles = parser.parse(stylesToParse)
-
-      if (parser.cache.hits <= this.hits) {
-        insertCSS(this.parsedStyles.css)
+      static contextTypes = {
+        theme: React.PropTypes.object
       }
-    }
 
-    render () {
-      const {tokens} = this.parsedStyles
-      return <WrappedComponent {...this.props} styles={tokens} />
+      _injectSheet = () => {
+        const stylesToParse = typeof styles === 'function'
+          ? styles(this.context.theme)
+          : styles
+
+        const hits = parser.cache.hits
+        const parsedStyles = parser.parse(stylesToParse)
+
+        if (parser.cache.hits <= hits) {
+          insertCSS(parsedStyles.css)
+        }
+
+        return parsedStyles.tokens
+      }
+
+      render () {
+        const tokens = this._injectSheet()
+        return <WrappedComponent {...this.props} styles={tokens} />
+      }
     }
   }
 }
@@ -49,12 +39,6 @@ const _getDisplayName = WrappedComponent => {
   return WrappedComponent.displayName ||
     WrappedComponent.name ||
     'Component'
-}
-
-const _decorator = styles => {
-  return WrappedComponent => {
-    return _wrap(WrappedComponent, styles)
-  }
 }
 
 export {ThemeProvider}

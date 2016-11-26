@@ -48,15 +48,19 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
 	var _reactDom = __webpack_require__(34);
 	
-	var _index = __webpack_require__(172);
+	var _src = __webpack_require__(172);
 	
-	var _Button = __webpack_require__(222);
+	var _src2 = _interopRequireDefault(_src);
+	
+	var _Button = __webpack_require__(221);
 	
 	var _Button2 = _interopRequireDefault(_Button);
 	
@@ -68,6 +72,8 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+	
 	var theme = {
 	  colors: {
 	    default: 'lightgray',
@@ -76,17 +82,35 @@
 	    invertedText: 'white'
 	  },
 	  sizes: {
-	    borderRadius: 4,
+	    borderRadius: 6,
 	    verticalPadding: 10,
 	    horizontalPadding: 10
 	  }
 	};
 	
+	var bgStyle = function bgStyle(theme) {
+	  return '\n  .default > button {\n    border-radius: ' + theme.sizes.borderRadius + 'px;\n  }\n\n  .default > button:first-child {\n    border-radius: ' + theme.sizes.borderRadius + 'px 0 0 ' + theme.sizes.borderRadius + 'px;\n  }\n\n  .default > button:last-child {\n    border-radius: 0 ' + theme.sizes.borderRadius + 'px ' + theme.sizes.borderRadius + 'px 0;\n  }\n';
+	};
+	
+	var ButtonGroup = function ButtonGroup(_ref) {
+	  var children = _ref.children,
+	      styles = _ref.styles,
+	      rest = _objectWithoutProperties(_ref, ['children', 'styles']);
+	
+	  return _react2.default.createElement(
+	    'span',
+	    _extends({ className: styles.default }, rest),
+	    children
+	  );
+	};
+	
+	ButtonGroup = (0, _src2.default)(bgStyle)(ButtonGroup);
+	
 	var App = function (_Component) {
 	  _inherits(App, _Component);
 	
 	  function App() {
-	    var _ref;
+	    var _ref2;
 	
 	    var _temp, _this, _ret;
 	
@@ -96,7 +120,7 @@
 	      args[_key] = arguments[_key];
 	    }
 	
-	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = App.__proto__ || Object.getPrototypeOf(App)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref2 = App.__proto__ || Object.getPrototypeOf(App)).call.apply(_ref2, [this].concat(args))), _this), _this.state = {
 	      update: false
 	    }, _this.updateState = function (e) {
 	      e.preventDefault();
@@ -111,20 +135,20 @@
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
-	        _index.ThemeProvider,
+	        _src.ThemeProvider,
 	        { theme: theme },
 	        _react2.default.createElement(
-	          'div',
+	          ButtonGroup,
 	          null,
 	          _react2.default.createElement(
 	            _Button2.default,
 	            { onClick: this.updateState },
-	            'Default Button'
+	            'Button 1'
 	          ),
 	          _react2.default.createElement(
 	            _Button2.default,
-	            { primary: true },
-	            'Primary Button'
+	            null,
+	            'Button 2'
 	          )
 	        )
 	      );
@@ -21561,11 +21585,11 @@
 	
 	var _parser2 = _interopRequireDefault(_parser);
 	
-	var _ThemeProvider = __webpack_require__(220);
+	var _ThemeProvider = __webpack_require__(219);
 	
 	var _ThemeProvider2 = _interopRequireDefault(_ThemeProvider);
 	
-	var _insertCss = __webpack_require__(221);
+	var _insertCss = __webpack_require__(220);
 	
 	var _insertCss2 = _interopRequireDefault(_insertCss);
 	
@@ -21577,64 +21601,55 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var suitup = function suitup() {
-	  return _decorator.apply(undefined, arguments);
-	};
+	var suitup = function suitup(styles) {
+	  return function (WrappedComponent) {
+	    var _class, _temp2;
 	
-	var _wrap = function _wrap(WrappedComponent, styles) {
-	  var _class, _temp;
+	    return _temp2 = _class = function (_Component) {
+	      _inherits(_class, _Component);
 	
-	  return _temp = _class = function (_Component) {
-	    _inherits(Suitup, _Component);
+	      function _class() {
+	        var _ref;
 	
-	    function Suitup(props, context) {
-	      _classCallCheck(this, Suitup);
+	        var _temp, _this, _ret;
 	
-	      var _this = _possibleConstructorReturn(this, (Suitup.__proto__ || Object.getPrototypeOf(Suitup)).call(this, props));
+	        _classCallCheck(this, _class);
 	
-	      _this.componentWillMount = function () {
-	        _this._injectSheet();
-	      };
-	
-	      _this._injectSheet = function () {
-	        var stylesToParse = typeof styles === 'function' ? styles(_this.context.theme) : styles;
-	
-	        _this.hits = _parser2.default.cache.hits;
-	        _this.parsedStyles = _parser2.default.parse(stylesToParse);
-	
-	        if (_parser2.default.cache.hits <= _this.hits) {
-	          (0, _insertCss2.default)(_this.parsedStyles.css);
+	        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	          args[_key] = arguments[_key];
 	        }
-	      };
 	
-	      _this.hits = 0;
-	      _this.parsedStyles = {};
-	      return _this;
-	    }
+	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = _class.__proto__ || Object.getPrototypeOf(_class)).call.apply(_ref, [this].concat(args))), _this), _this._injectSheet = function () {
+	          var stylesToParse = typeof styles === 'function' ? styles(_this.context.theme) : styles;
 	
-	    _createClass(Suitup, [{
-	      key: 'render',
-	      value: function render() {
-	        var tokens = this.parsedStyles.tokens;
+	          var hits = _parser2.default.cache.hits;
+	          var parsedStyles = _parser2.default.parse(stylesToParse);
 	
-	        return _react2.default.createElement(WrappedComponent, _extends({}, this.props, { styles: tokens }));
+	          if (_parser2.default.cache.hits <= hits) {
+	            (0, _insertCss2.default)(parsedStyles.css);
+	          }
+	
+	          return parsedStyles.tokens;
+	        }, _temp), _possibleConstructorReturn(_this, _ret);
 	      }
-	    }]);
 	
-	    return Suitup;
-	  }(_react.Component), _class.displayName = 'Suitup(' + _getDisplayName(WrappedComponent) + ')', _class.contextTypes = {
-	    theme: _react2.default.PropTypes.object
-	  }, _temp;
+	      _createClass(_class, [{
+	        key: 'render',
+	        value: function render() {
+	          var tokens = this._injectSheet();
+	          return _react2.default.createElement(WrappedComponent, _extends({}, this.props, { styles: tokens }));
+	        }
+	      }]);
+	
+	      return _class;
+	    }(_react.Component), _class.displayName = 'Suitup(' + _getDisplayName(WrappedComponent) + ')', _class.contextTypes = {
+	      theme: _react2.default.PropTypes.object
+	    }, _temp2;
+	  };
 	};
 	
 	var _getDisplayName = function _getDisplayName(WrappedComponent) {
 	  return WrappedComponent.displayName || WrappedComponent.name || 'Component';
-	};
-	
-	var _decorator = function _decorator(styles) {
-	  return function (WrappedComponent) {
-	    return _wrap(WrappedComponent, styles);
-	  };
 	};
 	
 	exports.ThemeProvider = _ThemeProvider2.default;
@@ -21670,11 +21685,11 @@
 	
 	var _prefixer2 = _interopRequireDefault(_prefixer);
 	
-	var _HitMap = __webpack_require__(217);
+	var _HitMap = __webpack_require__(216);
 	
 	var _HitMap2 = _interopRequireDefault(_HitMap);
 	
-	var _mem = __webpack_require__(218);
+	var _mem = __webpack_require__(217);
 	
 	var _mem2 = _interopRequireDefault(_mem);
 	
@@ -31407,7 +31422,6 @@
 	  var exports = {};
 	
 	  function exportScopedName(name) {
-	    console.log('css', css.source);
 	    var scopedName = scopeGenerator(name, css.source.input.css);
 	    exports[name] = exports[name] || [];
 	    if (exports[name].indexOf(scopedName) < 0) {
@@ -31554,30 +31568,25 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var exportTokens = {};
-	var translations = {};
+	var process = function process(css) {
+	  var exportTokens = {};
+	  var translations = {};
 	
-	var extractExports = function extractExports(css) {
+	  (0, _icssReplaceSymbols2.default)(css, translations);
+	
 	  css.each(function (node) {
-	    if (node.type === 'rule' && node.selector === ':export') handleExport(node);
-	  });
-	};
-	
-	var handleExport = function handleExport(exportNode) {
-	  exportNode.each(function (decl) {
-	    if (decl.type === 'decl') {
-	      Object.keys(translations).forEach(function (translation) {
-	        decl.value = decl.value.replace(translation, translations[translation]);
+	    if (node.type === 'rule' && node.selector === ':export') {
+	      node.each(function (decl) {
+	        if (decl.type === 'decl') {
+	          Object.keys(translations).forEach(function (translation) {
+	            decl.value = decl.value.replace(translation, translations[translation]);
+	          });
+	          exportTokens[decl.prop] = decl.value;
+	        }
 	      });
-	      exportTokens[decl.prop] = decl.value;
+	      node.remove();
 	    }
 	  });
-	  exportNode.remove();
-	};
-	
-	var process = function process(css) {
-	  (0, _icssReplaceSymbols2.default)(css, translations);
-	  extractExports(css);
 	
 	  return exportTokens;
 	};
@@ -32099,8 +32108,7 @@
 	}];
 
 /***/ },
-/* 216 */,
-/* 217 */
+/* 216 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32118,7 +32126,6 @@
 	    _classCallCheck(this, HitMap);
 	
 	    this._map = new Map();
-	
 	    this._hits = 0;
 	  }
 	
@@ -32161,14 +32168,14 @@
 	exports.default = HitMap;
 
 /***/ },
-/* 218 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
-	var mimicFn = __webpack_require__(219);
+	var mimicFn = __webpack_require__(218);
 	
 	var cacheStore = new WeakMap();
 	
@@ -32224,7 +32231,7 @@
 	};
 
 /***/ },
-/* 219 */
+/* 218 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32258,7 +32265,7 @@
 	};
 
 /***/ },
-/* 220 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32307,7 +32314,7 @@
 	exports.default = ThemeProvider;
 
 /***/ },
-/* 221 */
+/* 220 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32368,7 +32375,7 @@
 	module.exports.insertCss = insertCss;
 
 /***/ },
-/* 222 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -32383,13 +32390,13 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Button = __webpack_require__(223);
+	var _Button = __webpack_require__(222);
 	
 	var _Button2 = _interopRequireDefault(_Button);
 	
-	var _index = __webpack_require__(172);
+	var _src = __webpack_require__(172);
 	
-	var _index2 = _interopRequireDefault(_index);
+	var _src2 = _interopRequireDefault(_src);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -32398,22 +32405,21 @@
 	var Button = function Button(_ref) {
 	  var children = _ref.children,
 	      styles = _ref.styles,
-	      primary = _ref.primary,
-	      rest = _objectWithoutProperties(_ref, ['children', 'styles', 'primary']);
+	      rest = _objectWithoutProperties(_ref, ['children', 'styles']);
 	
 	  return _react2.default.createElement(
 	    'button',
 	    _extends({
-	      className: primary ? styles.primary : styles.default
+	      className: styles.default
 	    }, rest),
 	    children
 	  );
 	};
 	
-	exports.default = (0, _index2.default)(_Button2.default)(Button);
+	exports.default = (0, _src2.default)(_Button2.default)(Button);
 
 /***/ },
-/* 223 */
+/* 222 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -32421,10 +32427,8 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var style = function style(_ref) {
-	  var sizes = _ref.sizes,
-	      colors = _ref.colors;
-	  return "\n  .base {\n    border: none;\n    border-radius: " + sizes.borderRadius + "px;\n    cursor: pointer;\n    padding: " + sizes.verticalPadding + "px " + sizes.horizontalPadding + "px;\n  }\n\n  .default {\n    composes: base;\n    background-color: " + colors.default + ";\n    color: " + colors.text + ";\n  }\n\n  .primary {\n    composes: base;\n    background-color: " + colors.primary + ";\n    color: " + colors.invertedText + ";\n  }\n";
+	var style = function style(theme) {
+	  return "\n  .base {\n    border: none;\n    border-radius: " + theme.sizes.borderRadius + ";\n    cursor: pointer;\n    padding: 10px 20px;\n  }\n\n  .default {\n    composes: base;\n    background-color: gray;\n    color: black;\n  }\n";
 	};
 	
 	exports.default = style;

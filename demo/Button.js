@@ -1,11 +1,11 @@
 import React from 'react'
 import style from './Button.style'
-import suitup from '../src/index'
+import suitup from '../src'
 
-const Button = ({children, styles, primary, ...rest}) => {
+const Button = ({children, styles, ...rest}) => {
   return (
     <button
-      className={primary ? styles.primary : styles.default}
+      className={styles.default}
       {...rest}
     >
       {children}

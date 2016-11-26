@@ -1,7 +1,6 @@
 class HitMap {
   constructor () {
     this._map = new Map()
-
     this._hits = 0
   }
 

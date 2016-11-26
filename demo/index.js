@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {render} from 'react-dom'
-import {ThemeProvider} from '../src/index'
+import suitup, {ThemeProvider} from '../src'
 import Button from './Button'
 
 const theme = {
@@ -11,11 +11,33 @@ const theme = {
     invertedText: 'white'
   },
   sizes: {
-    borderRadius: 4,
+    borderRadius: 6,
     verticalPadding: 10,
     horizontalPadding: 10
   }
 }
+
+const bgStyle = theme => `
+  .default > button {
+    border-radius: ${theme.sizes.borderRadius}px;
+  }
+
+  .default > button:first-child {
+    border-radius: ${theme.sizes.borderRadius}px 0 0 ${theme.sizes.borderRadius}px;
+  }
+
+  .default > button:last-child {
+    border-radius: 0 ${theme.sizes.borderRadius}px ${theme.sizes.borderRadius}px 0;
+  }
+`
+
+let ButtonGroup = ({children, styles, ...rest}) => {
+  return (
+    <span className={styles.default} {...rest}>{children}</span>
+  )
+}
+
+ButtonGroup = suitup(bgStyle)(ButtonGroup)
 
 class App extends Component {
   state = {
@@ -32,10 +54,10 @@ class App extends Component {
   render () {
     return (
       <ThemeProvider theme={theme}>
-        <div>
-          <Button onClick={this.updateState}>Default Button</Button>
-          <Button primary>Primary Button</Button>
-        </div>
+        <ButtonGroup>
+          <Button onClick={this.updateState}>Button 1</Button>
+          <Button>Button 2</Button>
+        </ButtonGroup>
       </ThemeProvider>
     )
   }
