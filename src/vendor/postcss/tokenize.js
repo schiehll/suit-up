@@ -123,9 +123,9 @@ export default function tokenize (input, options = { }) {
           } while (escaped)
 
           tokens.push(['brackets', css.slice(pos, next + 1),
-                    line, pos - offset,
-                    line, next - offset
-                ])
+            line, pos - offset,
+            line, next - offset
+          ])
           pos = next
         } else {
           next = css.indexOf(')', pos + 1)
@@ -135,9 +135,9 @@ export default function tokenize (input, options = { }) {
             tokens.push(['(', '(', line, pos - offset])
           } else {
             tokens.push(['brackets', content,
-                        line, pos - offset,
-                        line, next - offset
-                    ])
+              line, pos - offset,
+              line, next - offset
+            ])
             pos = next
           }
         }
@@ -183,9 +183,9 @@ export default function tokenize (input, options = { }) {
         }
 
         tokens.push(['string', css.slice(pos, next + 1),
-                line, pos - offset,
-                nextLine, next - nextOffset
-            ])
+          line, pos - offset,
+          nextLine, next - nextOffset
+        ])
 
         offset = nextOffset
         line = nextLine
@@ -201,9 +201,9 @@ export default function tokenize (input, options = { }) {
           next = RE_AT_END.lastIndex - 2
         }
         tokens.push(['at-word', css.slice(pos, next + 1),
-                line, pos - offset,
-                line, next - offset
-            ])
+          line, pos - offset,
+          line, next - offset
+        ])
         pos = next
         break
 
@@ -224,9 +224,9 @@ export default function tokenize (input, options = { }) {
           next += 1
         }
         tokens.push(['word', css.slice(pos, next + 1),
-                line, pos - offset,
-                line, next - offset
-            ])
+          line, pos - offset,
+          line, next - offset
+        ])
         pos = next
         break
 
@@ -254,9 +254,9 @@ export default function tokenize (input, options = { }) {
           }
 
           tokens.push(['comment', content,
-                    line, pos - offset,
-                    nextLine, next - nextOffset
-                ])
+            line, pos - offset,
+            nextLine, next - nextOffset
+          ])
 
           offset = nextOffset
           line = nextLine
@@ -271,9 +271,9 @@ export default function tokenize (input, options = { }) {
           }
 
           tokens.push(['word', css.slice(pos, next + 1),
-                    line, pos - offset,
-                    line, next - offset
-                ])
+            line, pos - offset,
+            line, next - offset
+          ])
           pos = next
         }
 
